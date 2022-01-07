@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
   addDoc,
+  deleteDoc,
   collection,
   onSnapshot,
   orderBy,
@@ -46,26 +47,28 @@ function Post({ id, username, userImg, img, caption }) {
 
   useEffect(
     () =>
-      onSnapshot(
-        query(
-          collection(db, "posts", id, "likes"),
-          orderBy("timestamp", "desc")
-        ),
-        (snapshot) => setLikes(snapshot.docs)
+      onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
+        setLikes(snapshot.docs)
       ),
-    [db, id]
+    [(db, id)]
   );
 
   useEffect(() => {
     setHasLiked(
-      likes.findIndex((like) => (liike.id === session?.user?.uid) !== -1)
+      likes.findIndex((like) => like.id === session?.user?.uid) !== -1
     );
-  }, [likes]);
+  }, [likes, id]);
 
   const likePost = async () => {
-    await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
-      username: session.user.username,
-    });
+    if (hasLiked) {
+      setHasLiked(false);
+      await deleteDoc(doc(db, "posts", id, "likes", session.user.uid));
+    } else {
+      setHasLiked(true);
+      await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
+        username: session.user.username,
+      });
+    }
   };
 
   const sendComment = async (e) => {
@@ -79,8 +82,6 @@ function Post({ id, username, userImg, img, caption }) {
       timestamp: serverTimestamp(),
     });
   };
-
-  console.log(comments);
 
   return (
     <div
@@ -104,7 +105,14 @@ function Post({ id, username, userImg, img, caption }) {
       {session && (
         <div className="flex px-4 pt-4 justify-between">
           <div className="flex space-x-4">
-            <HeartIcon className="btn" onClick={likePost} />
+            {hasLiked ? (
+              <HeartIconFilled
+                className="btn text-red-500"
+                onClick={likePost}
+              />
+            ) : (
+              <HeartIcon className="btn" onClick={likePost} />
+            )}
             <ChatIcon className="btn" />
             <PaperAirplaneIcon className="btn rotate-45 -mt-1" />
           </div>
@@ -113,6 +121,9 @@ function Post({ id, username, userImg, img, caption }) {
       )}
       {/* Caption */}
       <p className="p-5 truncate">
+        {likes.length > 0 && (
+          <p className="font-bold mb-1">{likes.length} likes</p>
+        )}
         <span className="font-semibold">{username} </span>
         <span>{caption}</span>
       </p>
