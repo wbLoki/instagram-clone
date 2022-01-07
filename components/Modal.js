@@ -21,16 +21,23 @@ function Modal() {
   const [selectedFile, setSelectedFile] = useState(null);
   const captionRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [checked, setChecked] = useState(false);
+
+  const checkBox = () => {
+    setChecked(!checked);
+  };
 
   const uploadPost = async () => {
     if (loading) return;
     setLoading(true);
 
     const docRef = await addDoc(collection(db, "posts"), {
+      id: session.user.uid,
       username: session.user.username,
       caption: captionRef.current.value,
       profileImg: session.user.image,
       timestamp: serverTimestamp(),
+      private: checked,
     });
     console.log("New doc added with ID", docRef.id);
 
@@ -166,6 +173,15 @@ function Modal() {
                     >
                       {loading ? "Uploading..." : "Upload Post"}
                     </button>
+                    <div className="items-center mt-3 ml-3">
+                      <input
+                        type="checkbox"
+                        onChange={checkBox}
+                        checked={checked}
+                        className="bg-white md:w-4 md:h-4 h-5 w-5 rounded-full shadow-md"
+                      />
+                      <span className="ml-2 text-sm">Post privately</span>
+                    </div>
                   </div>
                 </div>
               </div>

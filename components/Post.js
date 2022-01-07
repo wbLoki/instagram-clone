@@ -3,13 +3,10 @@ import {
   DotsHorizontalIcon,
   HeartIcon,
   PaperAirplaneIcon,
-  BookmarkIcon,
   EmojiHappyIcon,
+  TrashIcon,
 } from "@heroicons/react/outline";
-import {
-  HeartIcon as HeartIconFilled,
-  BookOpenIcon as BookmarkIconFilled,
-} from "@heroicons/react/solid";
+import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
@@ -26,7 +23,7 @@ import {
 import { db } from "../firebase";
 import Moment from "react-moment";
 
-function Post({ id, username, userImg, img, caption }) {
+function Post({ id, userId, username, userImg, img, caption }) {
   const { data: session } = useSession();
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
@@ -69,6 +66,10 @@ function Post({ id, username, userImg, img, caption }) {
         username: session.user.username,
       });
     }
+  };
+
+  const deletePost = async () => {
+    session.user?.uid === userId && (await deleteDoc(doc(db, "posts", id)));
   };
 
   const sendComment = async (e) => {
@@ -116,7 +117,9 @@ function Post({ id, username, userImg, img, caption }) {
             <ChatIcon className="btn" />
             <PaperAirplaneIcon className="btn rotate-45 -mt-1" />
           </div>
-          <BookmarkIcon className="btn" />
+          {session?.user?.uid === userId && (
+            <TrashIcon className="btn" onClick={deletePost} />
+          )}
         </div>
       )}
       {/* Caption */}

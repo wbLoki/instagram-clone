@@ -2,6 +2,7 @@ import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
 import { db } from "../firebase";
 import { useEffect, useState } from "react";
 import Post from "./Post";
+import { useSession } from "next-auth/react";
 
 // const posts = [
 //   {
@@ -32,6 +33,7 @@ import Post from "./Post";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
+  const { data: session } = useSession();
 
   useEffect(
     () =>
@@ -46,16 +48,23 @@ function Posts() {
 
   return (
     <div>
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          id={post.id}
-          username={post.data().username}
-          userImg={post.data().profileImg}
-          img={post.data().image}
-          caption={post.data().caption}
-        />
-      ))}
+      {posts
+        .filter(
+          (post) =>
+            post.data().id === session?.user?.uid ||
+            post.data().private === false
+        )
+        .map((post) => (
+          <Post
+            key={post.id}
+            id={post.id}
+            userId={post.data().id}
+            username={post.data().username}
+            userImg={post.data().profileImg}
+            img={post.data().image}
+            caption={post.data().caption}
+          />
+        ))}
     </div>
   );
 }
