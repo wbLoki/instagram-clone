@@ -7,6 +7,7 @@ import {
   PaperAirplaneIcon,
   MenuIcon,
   HomeIcon,
+  FingerPrintIcon,
 } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -27,7 +28,7 @@ function Header() {
           className="relative hidden lg:inline-grid w-24 cursor-pointer"
         >
           <Image
-            src="https://links.papareact.com/ocw"
+            src="https://i.ibb.co/84Q0FJY/outagram.png"
             layout="fill"
             objectFit="contain"
             href="/"
@@ -39,7 +40,7 @@ function Header() {
           className="relative w-10 lg:hidden flex-shrink-0 cursor-pointer"
         >
           <Image
-            src="https://links.papareact.com/jjm"
+            src="https://i.ibb.co/tDfqgzC/logo-square.png"
             layout="fill"
             objectFit="contain"
           />
