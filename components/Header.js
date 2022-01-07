@@ -7,7 +7,6 @@ import {
   PaperAirplaneIcon,
   MenuIcon,
   HomeIcon,
-  FingerPrintIcon,
 } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";

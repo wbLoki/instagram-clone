@@ -54,6 +54,7 @@ function Modal() {
     setOpen(false);
     setLoading(false);
     setSelectedFile(null);
+    setChecked(false);
   };
 
   const addImageToPost = (e) => {
