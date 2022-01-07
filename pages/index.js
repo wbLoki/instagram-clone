@@ -10,7 +10,7 @@ export default function Home() {
     scrollbar-hide"
     >
       <Head>
-        <title>Instagram v2</title>
+        <title>Outagram</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
