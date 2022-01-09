@@ -16,6 +16,7 @@ function Stories() {
   }, []);
   return (
     <div
+      id="stories"
       className="flex space-x-2 p-4 bg-white mt-8
       border-gray-200 border rounded-sm overflow-x-scroll
       scrollbar-thin scrollbar-thumb-gray-700

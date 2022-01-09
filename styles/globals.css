@@ -3,26 +3,29 @@
 @tailwind utilities;
 
 @layer components {
-    .navBtn {
-        @apply hidden h-6 md:inline-flex cursor-pointer 
-        hover:scale-125 transition-all duration-150 ease-out
-    }
-    .btn {
-        @apply h-7 hover:scale-110 cursor-pointer transition-all
+  .navBtn {
+    @apply hidden h-6 md:inline-flex cursor-pointer 
+        hover:scale-125 transition-all duration-150 ease-out;
+  }
+  .btn {
+    @apply h-7 hover:scale-110 cursor-pointer transition-all
         duration-150 ease-out;
-    }
-    .actionBtn{
-        @apply cursor-pointer text-[#0095f6] font-semibold;
-    }
-    .filledActionBtn{
-        @apply cursor-pointer text-white font-semibold bg-[#0095f6] text-sm
+  }
+  .actionBtn {
+    @apply cursor-pointer text-[#0095f6] font-semibold;
+  }
+  .filledActionBtn {
+    @apply cursor-pointer text-white font-semibold bg-[#0095f6] text-sm
         border rounded-md px-[9px] py-[5px];
-    }
+  }
 }
 
 .scrollbar-thin {
-    --scrollbar-track: initial;
-    --scrollbar-thumb: initial;
-    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-    overflow: scroll;
+  --scrollbar-track: initial;
+  --scrollbar-thumb: initial;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  overflow: scroll;
+}
+#stories::-webkit-scrollbar {
+  display: none;
 }
