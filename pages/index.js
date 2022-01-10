@@ -11,7 +11,7 @@ export default function Home() {
     >
       <Head>
         <title>Outagram</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="https://i.ibb.co/tDfqgzC/logo-square.png" />
       </Head>
       <Header />
       <Feed />
